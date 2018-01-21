@@ -9,9 +9,7 @@ var fs = require('fs');
 var appEnv = null;
 var conversationWorkspace, conversation;
 
-// =====================================
-// CRIANDO CONEXÃO COM WATSON ==========
-// =====================================
+//Conexão com watson
     conversation = watson.conversation({
         url: "https://gateway.watsonplatform.net/conversation/api"
         , username: "533602e9-9b29-4815-a89e-dd1efe5d5d60" 
@@ -66,9 +64,7 @@ var chatbot = {
 
 
 
-// ===============================================
-// LOGS COM INPUTS DO USUÁRIO PARA O BOT =========
-// ===============================================
+//logs no console para controle do app
 function chatLogs(owner, conversation, response, callback) {
     console.log("Response object is: ", response);
     var logFile = {
@@ -131,16 +127,15 @@ function chatLogs(owner, conversation, response, callback) {
         }
     });
 }
-// ===============================================
-// FUNÇÕES DO BOT E LOG ==========================
-// ===============================================
+
+//Construtor do contexto
+//Começa vazio
 function buildContextObject(req, callback) {
     var message = req.body.text;
     var context;
     if (!message) {
         message = '';
     }
-    //Parâmetros vazio para iniciar o objeto de contexto
     var params = {
         workspace_id: conversationWorkspace
         , input: {}
@@ -155,7 +150,6 @@ function buildContextObject(req, callback) {
     else {
         context = '';
     }
-    // Parâmetros do payload, F12>network> pra ver o payload 
     params.input = {
         text: message
     };
