@@ -4,7 +4,7 @@
  *
  */
 var watson = require('watson-developer-cloud');
-var CONVERSATION_NAME = "Conversation-tracker";
+var CONVERSATION_NAME = "Conversation-nvidia";
 var fs = require('fs');
 var appEnv = null;
 var conversationWorkspace, conversation;
@@ -67,7 +67,7 @@ var chatbot = {
 
 
 // ===============================================
-// LOGS COM INPUTS DO USUÁRIO =====================
+// LOGS COM INPUTS DO USUÁRIO PARA O BOT =========
 // ===============================================
 function chatLogs(owner, conversation, response, callback) {
     console.log("Response object is: ", response);
@@ -140,6 +140,7 @@ function buildContextObject(req, callback) {
     if (!message) {
         message = '';
     }
+    //Parâmetros vazio para iniciar o objeto de contexto
     var params = {
         workspace_id: conversationWorkspace
         , input: {}
