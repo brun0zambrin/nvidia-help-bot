@@ -1,8 +1,3 @@
-/**
- *
- * @requires  app.js
- *
- */
 var watson = require('watson-developer-cloud');
 var CONVERSATION_NAME = "Conversation-nvidia";
 var fs = require('fs');
