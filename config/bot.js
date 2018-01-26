@@ -1,7 +1,6 @@
 var watson = require('watson-developer-cloud');
 var CONVERSATION_NAME = "Conversation-nvidia";
 var fs = require('fs');
-var appEnv = null;
 var conversationWorkspace, conversation;
 
 //Conexão com watson
@@ -56,72 +55,6 @@ var chatbot = {
         });
 }
 };
-
-
-
-//logs no console para controle do app
-function chatLogs(owner, conversation, response, callback) {
-    console.log("Response object is: ", response);
-    var logFile = {
-        inputText: ''
-        , responseText: ''
-        , entities: {}
-        , intents: {}
-    , };
-    logFile.inputText = response.input.text;
-    logFile.responseText = response.output.text;
-    logFile.entities = response.entities;
-    logFile.intents = response.intents;
-    logFile.date = new Date();
-    var date = new Date();
-    var doc = {};
-    Logs.find({
-        selector: {
-            'conversation': conversation
-        }
-    }, function (err, result) {
-        if (err) {
-            console.log("Couldn't find logs.");
-            callback(null);
-        }
-        else {
-            doc = result.docs[0];
-            if (result.docs.length === 0) {
-                console.log("No log. Creating new one.");
-                doc = {
-                    owner: owner
-                    , date: date
-                    , conversation: conversation
-                    , lastContext: response.context
-                    , logs: []
-                };
-                doc.logs.push(logFile);
-                Logs.insert(doc, function (err, body) {
-                    if (err) {
-                        console.log("There was an error creating the log: ", err);
-                    }
-                    else {
-                        console.log("Log successfull created: ", body);
-                    }
-                    callback(null);
-                });
-            }
-            else {
-                doc.lastContext = response.context;
-                doc.logs.push(logFile);
-                Logs.insert(doc, function (err, body) {
-                    if (err) {
-                        console.log("There was an error updating the log: ", err);
-                    }
-                    else {
-                        console.log("Log successfull updated: ", body);
-                    }
-                    callback(null);
-                });
-            }
-        }
-    });
-}
 
 //Construtor do contexto
 //Começa vazio
